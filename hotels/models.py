@@ -9,7 +9,7 @@ class Country(models.Model):
         return self.name
 
 class Hotel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     image = models.ImageField(default='Group_28.png')
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)

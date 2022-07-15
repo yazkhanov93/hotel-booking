@@ -9,7 +9,7 @@ class Category(models.Model):
         return self.title
 
 class Room(models.Model):
-    number = models.CharField(max_length=255, primary_key=True)
+    number = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     floor = models.PositiveIntegerField()
