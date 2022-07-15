@@ -50,7 +50,6 @@ class HotelView(APIView):
     def post(self, request):
         data = request.data
         data['user'] = request.user.id
-        print(data)
         serializer = HotelSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
