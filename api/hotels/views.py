@@ -48,21 +48,20 @@ def registerUser(request):
 class HotelView(APIView):
 
     def post(self, request):
-        user = request.user
         data = request.data
-        data['user'] = user.id
+        data['user'] = request.user.id
+        print(data)
         serializer = HotelSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-
+    
     def get(self, request):
-        user = request.user
         try:
-            profile = Hotel.objects.get(user__id=user.id)
+            hotel = Hotel.objects.all()
+            serializer = HotelSerializer(hotel, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except:
-            return Response({'errors':'Profile does not exist'})
-        serializer = HotelSerializer(profile)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_404_NOT_FOUND)
