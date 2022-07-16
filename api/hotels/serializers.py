@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from hotels.models import Country, HotelProfile, HotelImages
 
 
-class Country(serializers.ModelSerializer):
+class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = '__all__'
@@ -33,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserSerializerWithToken(UserSerializer):
-    token = serilizers.SerializerMethodField(read_only=True)
+    token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
