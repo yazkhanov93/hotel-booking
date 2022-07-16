@@ -1,24 +1,30 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-from hotels.models import Hotel
+from hotels.models import Country, HotelProfile, HotelImages
 
 
-class HotelSerializer(serializers.ModelSerializer):
+class Country(serializers.ModelSerializer):
     class Meta:
-        model = Hotel
+        model = Country
+        fields = '__all__'
+
+
+class HotelProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HotelProfile
         fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
     isStaff = serializers.SerializerMethodField('get_isStaff')
-    hotel = HotelSerializer(many=True, read_only=True)
+    hotelProfile = HotelProfileSerializer(many=False, read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'isAdmin', 'hotel', 'isStaff']
-    
+        fields = ['id', 'username', 'email', 'isAdmin', 'isStaff', 'hotelProfile']
+
     def get_isAdmin(self, obj):
         return obj.is_staff
 
@@ -27,11 +33,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserSerializerWithToken(UserSerializer):
-    token = serializers.SerializerMethodField(read_only=True)
+    token = serilizers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username','isAdmin','token','is_staff']
+        fields = ['id', 'username','isAdmin', 'token', 'is_staff']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
