@@ -23,3 +23,12 @@ class RoomView(APIView):
             return Response(serializer.data)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    def post(serlf,request):
+        data = request.data
+        serializer = RoomSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
