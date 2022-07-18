@@ -7,4 +7,6 @@ urlpatterns = [
     path('register/', views.registerUser, name='register'),
     path('login/', views.MyTokenObtainPairView.as_view(), name='login'),
     path('create-hotel/', views.HotelProfileView.as_view(), name='create-hotel'),
+    path('hotel-detail/<int:pk>/', views.HotelProfileView.as_view(), name='hotel-detail'),
+    path('hotel-list/', views.HotelProfileListView.as_view(), name='hotel-list')
 ]

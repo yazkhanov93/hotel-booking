@@ -32,3 +32,13 @@ class RoomView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class RoomDetailView(APIView):
+    def get(self, request, pk):
+        try:
+            room = Room.objects.get(id=pk)
+            serializer = RoomSerializer(room, many=False)
+            return Response(serializer.data)
+        except ValueError:
+            return Response(status=status.HTTP_404_NOT_FOUND)

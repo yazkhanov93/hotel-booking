@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'hotels',
-    'rooms'    
+    'rooms',
+    'booking_room'
 ]
 
 REST_FRAMEWORK = {

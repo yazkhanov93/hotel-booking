@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from hotels.models import Country, HotelProfile, HotelImages
+# from api.rooms.serializers import RoomSerializer
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -11,9 +12,16 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class HotelProfileSerializer(serializers.ModelSerializer):
+    # hotel_room = RoomSerializer(read_only=True, many=True)
     class Meta:
         model = HotelProfile
-        fields = '__all__'
+        fields = ['name', 'logo', 'country','city','address', 'phone','email','stars','description','user']
+
+
+class HotelProfileListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HotelProfile
+        fields = ['user', 'name', 'country', 'city', 'stars', 'logo']
 
 
 class UserSerializer(serializers.ModelSerializer):

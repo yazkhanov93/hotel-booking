@@ -8,7 +8,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from hotels.models import HotelProfile, HotelImages, Country
-from .serializers import HotelProfileSerializer, UserSerializer, UserSerializerWithToken, CountrySerializer
+from rooms.models import Room
+from .serializers import HotelProfileSerializer, UserSerializer, UserSerializerWithToken, CountrySerializer, HotelProfileListSerializer
+from api.rooms.serializers import RoomSerializer
 
 
 class CountryView(APIView):
@@ -60,3 +62,23 @@ class HotelProfileView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+    def get(self, request,pk):
+        try:
+            hotel = HotelProfile.objects.get(id=pk)
+            serializer = HotelProfileSerializer(hotel, many=False)
+            rooms = Room.objects.filter(user=hotel.user)
+            r_serializer = RoomSerializer(rooms, many=True)
+            return Response({'hotel_detail':serializer.data, 'Hotel_rooms':r_serializer.data})
+        except ValueError:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class HotelProfileListView(APIView):
+    def get(self, request):
+        try:
+            hotels = HotelProfile.objects.all()
+            serializer = HotelProfileListSerializer(hotels, many=True)
+            return Response(serializer.data)
+        except ValueError:
+            return Response(status=status.HTTP_404_NOT_FOUND)

@@ -11,7 +11,7 @@ class Category(models.Model):
 
 
 class Room(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='hotel_room')
     number = models.CharField(max_length=50)
     floor = models.PositiveIntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
