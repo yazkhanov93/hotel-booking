@@ -16,7 +16,6 @@ class Room(models.Model):
     floor = models.PositiveIntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=8, decimal_places=2)
-    isBooked = models.BooleanField(default=False)
     description = models.TextField()
 
     def __str__(self):

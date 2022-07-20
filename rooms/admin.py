@@ -9,5 +9,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ['number', 'user', 'floor', 'price', 'category', 'isBooked']
-    list_editable = ['isBooked',]
+    list_display = ['number', 'user', 'floor', 'price', 'category',]
