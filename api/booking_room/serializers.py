@@ -7,4 +7,7 @@ class BookingRoomSerializer(serializers.ModelSerializer):
         model = BookingRoom
         fields = '__all__'
 
-    
+class BookedRoomDateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookingRoom
+        fields = ['roomId', 'bookedFrom', 'bookedTo']

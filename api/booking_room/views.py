@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from restframework import status
+from rest_framework import status
 from .serializers import BookingRoomSerializer
 from booking_room.models import BookingRoom
 

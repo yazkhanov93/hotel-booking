@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rooms.models import Room,RoomImage,Category
 from .serializers import CategorySerializer, RoomSerializer
+from booking_room.models import BookingRoom
+from api.booking_room.serializers import BookedRoomDateSerializer
 
 
 class CategoryView(APIView):
@@ -38,7 +40,9 @@ class RoomDetailView(APIView):
     def get(self, request, pk):
         try:
             room = Room.objects.get(id=pk)
+            room_booked = BookingRoom.objects.filter(roomId=room.id)
             serializer = RoomSerializer(room, many=False)
-            return Response(serializer.data)
+            serializer_b = BookedRoomDateSerializer(room_booked, many=True)
+            return Response({"room-detail":serializer.data, "booked":serializer_b.data})
         except ValueError:
             return Response(status=status.HTTP_404_NOT_FOUND)
